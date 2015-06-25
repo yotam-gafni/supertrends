@@ -1,0 +1,43 @@
+<html>
+  <head>
+    <script type='text/javascript' src='https://www.google.com/jsapi'></script>
+    <script type='text/javascript'>
+     google.load('visualization', '1', {'packages': ['geochart']});
+     google.setOnLoadCallback(drawMarkersMap);
+
+      function drawMarkersMap() {
+      var data = google.visualization.arrayToDataTable([
+          ['Address'],
+          ['מגדל העמק, האיצטדיון 11'], 
+          ['ירושלים, בית הדפוס 29'], 
+          ['קרית ביאליק, הנס מולר 6, צור שלום'], 
+          ['כנות, אדום 24 פארק התעשיות כנות'], 
+          ['אשדוד, בעלי המלאכה 4'], 
+          ['פתח תקווה, unknown'], 
+          ['בני ברק, הקישון 11'], 
+          ['באר שבע, הקוצר 15 אזור תעשיה עמק שרה'], 
+          ['בית שמש, unknown'], 
+          ['לוד, בת שבע 1 מתחם טלרד'], 
+          ['אשקלון בת הדר, unknown'], 
+          ['ירושלים, פייר קניג 26 קניון הדר'], 
+          ['ירושלים, שמגר 16'], 
+      ]);
+
+      var options = {
+        region: 'IL',
+        displayMode: 'markers',
+        colorAxis: {colors: ['blue', 'red']},
+        width : 1400,
+        height : 900,
+        keepAspectRatio : false
+      };
+
+      var chart = new google.visualization.GeoChart(document.getElementById('chart_div'));
+      chart.draw(data, options);
+    };
+    </script>
+  </head>
+  <body>
+    <div id="chart_div" style="width: 900px; height: 500px;"></div>
+  </body>
+</html>
