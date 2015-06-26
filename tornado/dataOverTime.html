@@ -1,0 +1,40 @@
+<html>
+  <head>
+    <script type="text/javascript"
+          src="https://www.google.com/jsapi?autoload={
+            'modules':[{
+             'name':'visualization',
+              'version':'1',
+              'packages':['corechart']
+            }]
+          }"></script>
+
+    <script type="text/javascript">
+	graph_data = [];
+	graph_data.push(['Day', 'Price']);
+	{% for data in graph_data %}
+		graph_data.push(['{{data[0]}}', {{data[1]}}]);
+	{% end %}
+	console.log(graph_data);
+      google.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable(graph_data);
+
+        var options = {
+          title: 'Bread prices over time',
+          curveType: 'function',
+          legend: { position: 'bottom' }
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+        chart.draw(data, options);
+      }
+    </script>
+  </head>
+  <body>
+    <title> {{title}} </title>
+    <div id="curve_chart" style="width: 900px; height: 500px"></div>
+  </body>
+</html>
