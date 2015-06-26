@@ -11,20 +11,23 @@ import json
 
 
 class MainHandler(tornado.web.RequestHandler):
-    def get(self):
-	graph_data = []
+    def get(self, ItemCode):
+    	graph_data = []
         client = MongoClient(DBURI) 
-	coll_data = client.supertrends.supertrends.find()
-	for data_dict in coll_data:
-		graph_data.append([data_dict['day_date'], data_dict['price_data']])	
-        self.render("dataOverTime.html", title = "Whatever", graph_data = graph_data)
+        product_name = ""
+        coll_data = client.supertrends.supertrends.find({'ItemCode': int(ItemCode)})
+        for data_dict in coll_data:
+            graph_data.append([data_dict['Time'], data_dict['ItemPrice']])	
+            product_name = data_dict['ItemName']
+        print graph_data
+        self.render("dataOverTime.html", title = "Whatever", graph_data = graph_data, product_name = product_name)
 
 def check_updates():
 	pass
 
 if __name__ == "__main__":
     application = tornado.web.Application([
-    (r"/", MainHandler),
+    (r"/(.*)", MainHandler),
     ])
     application.listen(8888)
 
